@@ -1,6 +1,8 @@
 import pygame
 from frog import Frog
 from controller import Controller
+from ball import Ball
+from sequence import Sequence
 
 
 class Game:
@@ -13,7 +15,7 @@ class Game:
         self.screen = pygame.display.set_mode(self.rect.size)
         self.frog = Frog(screen=self.screen, frog_sprite=frog_sprite,
                          frog_position=frog_position)
-        self.controller = Controller(frog=self.frog)
+        self.controller = Controller(screen=self.screen, frog=self.frog)
 
     def run(self):
         while True:
