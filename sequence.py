@@ -52,7 +52,7 @@ class Sequence:
 
     def move(self):
         for i in self.arr:
-            i.rect.move_ip(0, 40)
+            i.rect.move_ip(0, 30)
 
     def draw(self):
         for i in self.arr:

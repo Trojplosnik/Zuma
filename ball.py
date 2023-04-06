@@ -1,7 +1,8 @@
 import pygame
 
 
-DEFAULT_BALL_SIZE = (40, 40)
+DEFAULT_BALL_SIZE = (30, 30)
+
 
 class Ball(pygame.sprite.Sprite):
 

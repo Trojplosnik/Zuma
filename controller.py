@@ -2,12 +2,14 @@ import pygame
 import sys
 from sequence import Sequence
 
+
 def draw(obj):
     obj.draw()
 
 
 class Controller:
-    def __init__(self, frog, screen):
+    def __init__(self, frog, screen, game_map):
+        self.game_map = game_map
         self.timer_event = pygame.USEREVENT + 1
         self.screen = screen
         self.frog = frog
@@ -30,6 +32,7 @@ class Controller:
                 self.setup_timer()
 
     def update(self):
+        self.game_map.draw_map()
         self.seq.draw()
-        self.frog.show()
+        self.frog.draw_frog()
         pygame.display.flip()

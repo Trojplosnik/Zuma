@@ -1,17 +1,20 @@
 import pygame
 import math
 
+DEFAULT_FROG_SIZE = (90, 90)
 
-class Frog():
-    def __init__(self, screen, frog_sprite, frog_position):
+
+class Frog:
+    def __init__(self, screen, frog_position):
         self.screen = screen
-        self.original_image = pygame.image.load(frog_sprite)
+        self.original_image = pygame.image.load("images/Cirno.png")
+        # self.original_image = pygame.transform.scale(self.original_image, DEFAULT_FROG_SIZE)
         self.image = self.original_image.copy()
         self.rect = self.image.get_rect(center=frog_position)
         self.frog_position = frog_position
         self.screen.blit(self.image, self.rect)
 
-    def show(self):
+    def draw_frog(self):
         self.screen.blit(self.image, self.rect)
 
     def rotate(self):
