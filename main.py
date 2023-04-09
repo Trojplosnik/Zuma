@@ -8,12 +8,11 @@ from sequence import Sequence
 
 class Game:
 
-    def __init__(self, game_map_sprite, frog_position):
+    def __init__(self, game_map_sprite, frog_position, path_file):
         pygame.init()
-        game_map = GameMap(game_map_sprite=game_map_sprite)
-        screen = game_map.get_screen()
-        frog = Frog(screen=screen, frog_position=frog_position)
-        self.controller = Controller(screen=screen, frog=frog, game_map=game_map)
+        self.controller = Controller(game_map_sprite=game_map_sprite,
+                                     frog_position=frog_position,
+                                     path_file=path_file)
 
     def run(self):
         while True:
@@ -22,5 +21,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(game_map_sprite="images/Map.jpg", frog_position=(372, 280))
+    game = Game(game_map_sprite="images/Map.jpg", frog_position=(372, 280),
+                path_file="path.txt")
     game.run()

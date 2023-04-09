@@ -1,10 +1,14 @@
+import sys
+
 from ball import Ball
 from random import randint
+import re
 
 """
     Ищет границы последоватедльности
     из одинаковых шаров возле индекса (target)
 """
+
 
 def find_bounds(a: list, target: int) -> (int, int):  # TODO покрыть тестами
     left, right = target, target
@@ -21,39 +25,44 @@ def find_bounds(a: list, target: int) -> (int, int):  # TODO покрыть те
     return left, right
 
 
+# RED = (255, 0, 0)
+# GREEN = (0, 255, 0)
+# BLUE = (0, 0, 255)
+# YELLOW = (255, 255, 0)
+num_reg = r'\d+'
+
 
 class Sequence:
-    arr = []
+    def __init__(self, screen, path_file):
+        self.balls_arr = []
+        self.screen = screen
+        with open(path_file) as path:
+            self.path = iter(re.findall(num_reg,  path.read()))
+        self.generate()
 
-    def generate(self, screen):
-        i = randint(0, 3)
-        if i == 1:
-            ball = Ball(screen, "r")
-        elif i == 2:
-            ball = Ball(screen, "g")
-        elif i == 3:
-            ball = Ball(screen, "b")
-        else:
-            ball = Ball(screen, "y")
-        self.push(ball)
-
+    def generate(self):
+        self.push(Ball(screen=self.screen, x=int(next(self.path)),
+                       y=int(next(self.path))))
 
     def push(self, ball: Ball) -> None:
-        self.arr.append(ball)
+        self.balls_arr.append(ball)
 
     def insert(self, ball: Ball, pos: int) -> None:
-        self.arr.insert(pos, ball)
-        l, r = find_bounds(self.arr, pos)
+        self.balls_arr.insert(pos, ball)
+        l, r = find_bounds(self.balls_arr, pos)
         if r - l + 1 >= 3:
             self.knock(l, r)
 
     def knock(self, left: int, right: int):
-        del self.arr[left:right + 1]
+        del self.balls_arr[left:right + 1]
 
     def move(self):
-        for i in self.arr:
-            i.rect.move_ip(0, 30)
+        for ball in self.balls_arr:
+            try:
+                ball.move_ball(int(next(self.path)), int(next(self.path)))
+            except StopIteration:
+                sys.exit()
 
     def draw(self):
-        for i in self.arr:
-            i.draw()
+        for ball in self.balls_arr:
+            ball.draw_ball()

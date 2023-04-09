@@ -1,29 +1,51 @@
 import pygame
+import math
+from random import randint
 
 
-DEFAULT_BALL_SIZE = (30, 30)
+DEFAULT_BALL_SIZE = 30
 
 
-class Ball(pygame.sprite.Sprite):
-
-    def __init__(self, screen, color="g"):
-        super(Ball, self).__init__()
+class Ball:
+    def __init__(self, screen, x, y, color="RANDOM"):
         self.screen = screen
         self.color = color
-        if color == "g":
+        if color == "GREEN":
             self.image = pygame.image.load('images/gball.png')
-        elif color == "y":
+        elif color == "YELLOW":
             self.image = pygame.image.load('images/yball.png')
-        elif color == "b":
+        elif color == "BLUE":
             self.image = pygame.image.load('images/bball.png')
-        elif color == "r":
+        elif color == "RED":
             self.image = pygame.image.load('images/rball.png')
-        self.image = pygame.transform.scale(self.image, DEFAULT_BALL_SIZE)
-        self.rect = self.image.get_rect()
-        self.rect.x = self.rect.width
-        self.rect.y = self.rect.height
-        self.x = float(self.rect.x)
-        self.y = float(self.rect.y)
+        else:
+            i = randint(0, 3)
+            if i == 0:
+                self.color = "GREEN"
+                self.image = pygame.image.load('images/gball.png')
+            elif i == 1:
+                self.color = "YELLOW"
+                self.image = pygame.image.load('images/yball.png')
+            elif i == 2:
+                self.color = "BLUE"
+                self.image = pygame.image.load('images/bball.png')
+            else:
+                self.color = "RED"
+                self.image = pygame.image.load('images/rball.png')
+        self.image = pygame.transform.scale(self.image, (DEFAULT_BALL_SIZE,
+                                                         DEFAULT_BALL_SIZE))
+        self.x = x - DEFAULT_BALL_SIZE / 2
+        self.y = y - DEFAULT_BALL_SIZE / 2
 
-    def draw(self):
-        self.screen.blit(self.image, self.rect)
+    def collide_balls(self, ball):
+        return math.sqrt(pow(ball.x - self.x, 2) + pow(ball.y - self.y, 2))\
+               < pow(DEFAULT_BALL_SIZE, 2)
+
+    def move_ball(self, x, y):
+        self.x = x - DEFAULT_BALL_SIZE / 2
+        self.y = y - DEFAULT_BALL_SIZE / 2
+
+    def draw_ball(self):
+        # pygame.draw.circle(surface=self.screen, color=self.color,
+        #                    center=(self.x, self.y), radius=DEFAULT_BALL_SIZE)
+        self.screen.blit(self.image, (self.x, self.y))

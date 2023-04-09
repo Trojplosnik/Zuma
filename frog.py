@@ -1,14 +1,11 @@
 import pygame
 import math
 
-DEFAULT_FROG_SIZE = (90, 90)
-
 
 class Frog:
     def __init__(self, screen, frog_position):
         self.screen = screen
         self.original_image = pygame.image.load("images/Cirno.png")
-        # self.original_image = pygame.transform.scale(self.original_image, DEFAULT_FROG_SIZE)
         self.image = self.original_image.copy()
         self.rect = self.image.get_rect(center=frog_position)
         self.frog_position = frog_position
