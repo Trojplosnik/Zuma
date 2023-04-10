@@ -1,9 +1,5 @@
 import pygame
-from gameMap import GameMap
-from frog import Frog
 from controller import Controller
-from ball import Ball
-from sequence import Sequence
 
 
 class Game:

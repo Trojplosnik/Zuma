@@ -28,6 +28,9 @@ class Controller:
                 sys.exit()
             elif event.type == pygame.MOUSEMOTION:
                 self.frog.rotate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    self.frog.shot()
             elif event.type == self.timer_event:
                 self.seq.move()
                 self.setup_timer()
