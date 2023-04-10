@@ -33,14 +33,13 @@ num_reg = r'\d+'
 
 class Sequence:
     def __init__(self, screen, path_file):
-        self.counter = 0
-        self.balls_arr = []
         self.screen = screen
+        self.balls_arr = []
         self.path = []
         with open(path_file) as path:
             for line in path:
-                self.path.append(re.findall(num_reg,  line))
-        print(self.path)
+                self.path.append(re.findall(num_reg, line))
+        # print(self.path)
         self.generate()
 
     def generate(self):
@@ -62,9 +61,9 @@ class Sequence:
     def move(self):
         for ball in self.balls_arr:
             try:
-                ball.move_ball(int(self.path[self.counter][0]),
-                               int(self.path[self.counter][1]))
-                self.counter += 1
+                ball.move_ball(int(self.path[ball.counter][0]),
+                               int(self.path[ball.counter][1]))
+                ball.counter += 1
             except IndexError:
                 sys.exit()
 

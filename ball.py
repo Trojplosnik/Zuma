@@ -3,11 +3,12 @@ import math
 from random import randint
 
 
-DEFAULT_BALL_SIZE = 25
+DEFAULT_BALL_SIZE = 40
 
 
 class Ball:
     def __init__(self, screen, x, y, color="RANDOM"):
+        self.counter = 0
         self.screen = screen
         self.color = color
         if color == "GREEN":
