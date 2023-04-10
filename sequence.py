@@ -1,7 +1,6 @@
 import sys
 
 from ball import Ball
-import re
 
 """
     Ищет границы последоватедльности
@@ -28,18 +27,14 @@ def find_bounds(a: list, target: int) -> (int, int):  # TODO покрыть те
 # GREEN = (0, 255, 0)
 # BLUE = (0, 0, 255)
 # YELLOW = (255, 255, 0)
-num_reg = r'\d+'
+
 
 
 class Sequence:
-    def __init__(self, screen, path_file):
+    def __init__(self, screen, path):
         self.screen = screen
         self.balls_arr = []
-        self.path = []
-        with open(path_file) as path:
-            for line in path:
-                self.path.append(re.findall(num_reg, line))
-        # print(self.path)
+        self.path = path
         self.generate()
 
     def generate(self):

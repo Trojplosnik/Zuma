@@ -1,13 +1,15 @@
 import pygame
-import math
 from random import randint
+import math
 
 
 DEFAULT_BALL_SIZE = 40
+DEFAULT_SPEED = 6
 
 
-class Ball:
+class Ball(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, color="RANDOM"):
+        super().__init__()
         self.counter = 0
         self.screen = screen
         self.color = color
@@ -35,17 +37,25 @@ class Ball:
                 self.image = pygame.image.load('images/rball.png')
         self.image = pygame.transform.scale(self.image, (DEFAULT_BALL_SIZE,
                                                          DEFAULT_BALL_SIZE))
-        self.ball_rect = self.image.get_rect()
-        self.ball_rect.centerx = x
-        self.ball_rect.centery = y
+        self.rect = self.image.get_rect()
+        self.rect.center = x, y
+        self.angle = 0
 
-    def collide_balls(self, ball):
-        return math.sqrt(pow(ball.x - self.x, 2) + pow(ball.y - self.y, 2))\
-               < pow(DEFAULT_BALL_SIZE, 2)
+    def fly(self):
+        self.rect.centerx += math.cos(self.angle) * DEFAULT_SPEED
+        self.rect.centery -= math.sin(self.angle) * DEFAULT_SPEED
+        if self.rect.x > self.screen.get_width() + 100 \
+                or self.rect.x < -100 \
+                or self.rect.y > self.screen.get_height() + 100 \
+                or self.rect.y < -100:
+            self.kill()
+
+    # def collide_balls(self, ball):
+    #     return math.sqrt(pow(ball.x - self.x, 2) + pow(ball.y - self.y, 2))\
+    #            < pow(DEFAULT_BALL_SIZE, 2)
 
     def move_ball(self, x, y):
-        self.ball_rect.move_ip(x - self.ball_rect.centerx,
-                               y - self.ball_rect.centery)
+        self.rect.center = x, y
 
     def draw_ball(self):
-        self.screen.blit(self.image, self.ball_rect)
+        self.screen.blit(self.image, self.rect)

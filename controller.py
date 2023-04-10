@@ -13,12 +13,13 @@ class Controller:
     def __init__(self, game_map_sprite, frog_position, path_file):
         self.timer_event = pygame.USEREVENT + 1
         self.timer_event_generate = pygame.USEREVENT + 2
-        self.game_map = GameMap(game_map_sprite=game_map_sprite)
+        self.game_map = GameMap(game_map_sprite=game_map_sprite, path_file=path_file)
         self.screen = self.game_map.get_screen()
         self.frog = Frog(screen=self.screen, frog_position=frog_position)
-        self.seq = Sequence(path_file=path_file, screen=self.screen)
+        self.seq = Sequence(screen=self.screen, path=self.game_map.path)
         self.setup_timer()
         self.setup_timer_generate()
+        self.flying_bullets = pygame.sprite.Group()
 
     def setup_timer(self):
         timer_interval = 20
@@ -36,8 +37,11 @@ class Controller:
                 self.frog.rotate()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    self.frog.shot()
+                    self.flying_bullets.add(self.frog.shot())
             elif event.type == self.timer_event:
+                if self.flying_bullets:
+                    for flying_bullet in self.flying_bullets:
+                        flying_bullet.fly()
                 self.seq.move()
                 self.setup_timer()
             elif event.type == self.timer_event_generate:
@@ -47,5 +51,6 @@ class Controller:
     def update(self):
         self.game_map.draw_map()
         self.seq.draw()
+        self.flying_bullets.draw(surface=self.screen)
         self.frog.draw_frog()
         pygame.display.flip()
