@@ -4,7 +4,7 @@ import math
 
 
 DEFAULT_BALL_SIZE = 40
-DEFAULT_SPEED = 6
+DEFAULT_SPEED = 10
 
 
 class Ball(pygame.sprite.Sprite):
@@ -42,17 +42,13 @@ class Ball(pygame.sprite.Sprite):
         self.angle = 0
 
     def fly(self):
-        self.rect.centerx += math.cos(self.angle) * DEFAULT_SPEED
-        self.rect.centery -= math.sin(self.angle) * DEFAULT_SPEED
+        self.rect.centerx += int(math.cos(self.angle) * DEFAULT_SPEED)
+        self.rect.centery -= int(math.sin(self.angle) * DEFAULT_SPEED)
         if self.rect.x > self.screen.get_width() + 100 \
                 or self.rect.x < -100 \
                 or self.rect.y > self.screen.get_height() + 100 \
                 or self.rect.y < -100:
             self.kill()
-
-    # def collide_balls(self, ball):
-    #     return math.sqrt(pow(ball.x - self.x, 2) + pow(ball.y - self.y, 2))\
-    #            < pow(DEFAULT_BALL_SIZE, 2)
 
     def move_ball(self, x, y):
         self.rect.center = x, y
