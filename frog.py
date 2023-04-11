@@ -48,7 +48,7 @@ class Frog(pygame.sprite.Sprite):
         self.bullet_top = self.bullet_center
         self.bullet_center = self.generate()
         flying_bullet.angle =\
-            math.radians(int(find_angle(*flying_bullet.rect.center)))
+            math.radians(int(find_angle(*self.frog_position)))
         return flying_bullet
 
     def generate(self):

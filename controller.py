@@ -10,10 +10,11 @@ def draw(obj):
 
 
 class Controller:
-    def __init__(self, game_map_sprite, frog_position, path_file):
+    def __init__(self, game_map_sprite, frog_position, path_file, target_sprite, target_position):
         self.timer_event = pygame.USEREVENT + 1
         self.timer_event_generate = pygame.USEREVENT + 2
-        self.game_map = GameMap(game_map_sprite=game_map_sprite, path_file=path_file)
+        self.game_map = GameMap(game_map_sprite=game_map_sprite, path_file=path_file,
+                                target_sprite=target_sprite, target_position=target_position)
         self.screen = self.game_map.get_screen()
         self.frog = Frog(screen=self.screen, frog_position=frog_position)
         self.seq = Sequence(screen=self.screen, path=self.game_map.path)
@@ -51,6 +52,7 @@ class Controller:
     def update(self):
         self.game_map.draw_map()
         self.seq.draw()
-        self.flying_bullets.draw(surface=self.screen)
+        self.game_map.draw_target()
         self.frog.draw_frog()
+        self.flying_bullets.draw(surface=self.screen)
         pygame.display.flip()
