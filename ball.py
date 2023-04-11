@@ -14,29 +14,30 @@ class Ball(pygame.sprite.Sprite):
         self.screen = screen
         self.color = color
         if color == "GREEN":
-            self.image = pygame.image.load('images/gball.png')
+            self.original_image = pygame.image.load('images/gball.png')
         elif color == "YELLOW":
-            self.image = pygame.image.load('images/yball.png')
+            self.original_image = pygame.image.load('images/yball.png')
         elif color == "BLUE":
-            self.image = pygame.image.load('images/bball.png')
+            self.original_image = pygame.image.load('images/bball.png')
         elif color == "RED":
-            self.image = pygame.image.load('images/rball.png')
+            self.original_image = pygame.image.load('images/rball.png')
         else:
             i = randint(0, 3)
             if i == 0:
                 self.color = "GREEN"
-                self.image = pygame.image.load('images/gball.png')
+                self.original_image = pygame.image.load('images/gball.png')
             elif i == 1:
                 self.color = "YELLOW"
-                self.image = pygame.image.load('images/yball.png')
+                self.original_image = pygame.image.load('images/yball.png')
             elif i == 2:
                 self.color = "BLUE"
-                self.image = pygame.image.load('images/bball.png')
+                self.original_image = pygame.image.load('images/bball.png')
             else:
                 self.color = "RED"
-                self.image = pygame.image.load('images/rball.png')
-        self.image = pygame.transform.scale(self.image, (DEFAULT_BALL_SIZE,
-                                                         DEFAULT_BALL_SIZE))
+                self.original_image = pygame.image.load('images/rball.png')
+        self.image = pygame.transform.scale(self.original_image,
+                                            (DEFAULT_BALL_SIZE,
+                                             DEFAULT_BALL_SIZE))
         self.rect = self.image.get_rect()
         self.rect.center = x, y
         self.angle = 0
