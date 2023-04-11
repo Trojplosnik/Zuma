@@ -67,10 +67,12 @@ class Controller:
                 # print(i, len(self.seq.balls_arr))
                 r = pygame.sprite.spritecollide(sprite=self.seq.balls_arr[i],
                                                 group=self.flying_bullets,
-                                                dokill=True,
-                                                collided=pygame.sprite.collide_circle)
+                                                dokill=True)
                 if len(r) != 0:
+                    print(j.rect.center)
+                    print(self.seq.balls_arr[i].rect.center)
                     self.seq.insert(j, i)
+                    print(j.color)
                     print([x.color for x in self.seq.balls_arr])
                     # print(self.seq.balls_arr)
                     return

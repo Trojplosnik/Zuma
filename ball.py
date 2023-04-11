@@ -45,10 +45,11 @@ class Ball(pygame.sprite.Sprite):
     def fly(self):
         self.rect.centerx += int(math.cos(self.angle) * DEFAULT_SPEED)
         self.rect.centery -= int(math.sin(self.angle) * DEFAULT_SPEED)
-        if self.rect.x > self.screen.get_width() + 100 \
-                or self.rect.x < -100 \
-                or self.rect.y > self.screen.get_height() + 100 \
-                or self.rect.y < -100:
+        if self.rect.x > self.screen.get_width() \
+                or self.rect.x < -DEFAULT_BALL_SIZE \
+                or self.rect.y > self.screen.get_height() \
+                or self.rect.y < -DEFAULT_BALL_SIZE:
+            print(self.rect.y)
             self.kill()
 
     def move_ball(self, x, y):

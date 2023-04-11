@@ -3,7 +3,7 @@ import re
 
 
 num_reg = r'\d+'
-DEFAULT_BALL_SIZE = 100
+DEFAULT_TARGET_SIZE = 100
 
 
 class GameMap:
@@ -12,8 +12,8 @@ class GameMap:
         self._rect = self._image.get_rect()
         self.target_image = pygame.image.load(target_sprite)
         self.target_image = pygame.transform.scale(self.target_image,
-                                                   (DEFAULT_BALL_SIZE,
-                                                    DEFAULT_BALL_SIZE))
+                                                   (DEFAULT_TARGET_SIZE,
+                                                    DEFAULT_TARGET_SIZE))
         self.target_rect = self.target_image.get_rect(center=target_position)
         pygame.display.set_caption("Zuma")
         self._screen = pygame.display.set_mode(self._rect.size)

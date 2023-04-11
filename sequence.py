@@ -40,6 +40,8 @@ class Sequence:
     def generate(self):
         self.push(Ball(screen=self.screen, x=int(self.path[0][0]),
                        y=int(self.path[0][1])))
+        if len(self.balls_arr) > 1:
+            self.balls_arr[-2].child = self.balls_arr[-1]
 
     def push(self, ball: Ball) -> None:
         self.balls_arr.append(ball)
@@ -51,6 +53,7 @@ class Sequence:
     def insert(self, ball: Ball, pos: int) -> None:
         ball.counter = self.balls_arr[pos].counter
         l, r, c = find_bounds(self.balls_arr, pos)
+        print(r, l, c)
         if r - l + 1 >= 2 and c == ball.color:
             self.knock(l, r)
         else:
@@ -59,11 +62,13 @@ class Sequence:
 
     def knock(self, left: int, right: int):
         delta = right - left + 1
-        for i in range(left):
-            self.balls_arr[i].counter = self.balls_arr[i + delta].counter
+        for i in range(len(self.balls_arr) - 1, right, -1):
+            self.balls_arr[i].counter = self.balls_arr[i - delta].counter
         for i in range(left, right + 1):
             self.balls_arr[i].kill()
         del self.balls_arr[left:right + 1]
+        # for i in range(left + 1):
+        #     self.balls_arr[i].counter = self.balls_arr[left].counter + 41 * (i)
 
     def move(self):
         for ball in self.balls_arr:
