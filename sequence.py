@@ -59,8 +59,8 @@ class Sequence:
 
     def knock(self, left: int, right: int):
         delta = right - left + 1
-        for i in range(len(self.balls_arr) - 1, right, -1):
-            self.balls_arr[i].counter = self.balls_arr[i - delta].counter
+        for i in range(left):
+            self.balls_arr[i].counter = self.balls_arr[i + delta].counter
         for i in range(left, right + 1):
             self.balls_arr[i].kill()
         del self.balls_arr[left:right + 1]
