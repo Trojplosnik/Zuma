@@ -56,3 +56,16 @@ class Controller:
         self.frog.draw_frog()
         self.flying_bullets.draw(surface=self.screen)
         pygame.display.flip()
+
+        for i in range(len(self.seq.balls_arr)):
+            for j in self.flying_bullets:
+                print(i, len(self.seq.balls_arr))
+                r = pygame.sprite.spritecollide(self.seq.balls_arr[i], self.flying_bullets, True, pygame.sprite.collide_circle)
+                if len(r) != 0:
+                    self.seq.insert(j, i)
+                    return
+            # r = pygame.sprite.spritecollide(self.seq.balls_arr[i], self.flying_bullets, False, pygame.sprite.collide_circle)
+            # for j in self.flying_bullets:
+            #         print(self.seq.balls_arr[i].color, i)
+            #         self.seq.insert(i)
+

@@ -44,14 +44,23 @@ class Sequence:
     def push(self, ball: Ball) -> None:
         self.balls_arr.append(ball)
 
+    def re_count(self, pos: int) -> None:
+        for i in range(pos + 1):
+            self.balls_arr[i].counter += 42
+
     def insert(self, ball: Ball, pos: int) -> None:
+        ball.counter = self.balls_arr[pos].counter
         self.balls_arr.insert(pos, ball)
         l, r = find_bounds(self.balls_arr, pos)
         if r - l + 1 >= 3:
             self.knock(l, r)
+        else:
+            self.re_count(pos)
 
     def knock(self, left: int, right: int):
         del self.balls_arr[left:right + 1]
+        for i in range(left):
+            self.balls_arr[i].counter = self.balls_arr[left].counter + 41 * (i)
 
     def move(self):
         for ball in self.balls_arr:
