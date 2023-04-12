@@ -34,8 +34,6 @@ class Sequence:
     def generate(self):
         self.push(Ball(screen=self.screen, x=int(self.path[0][0]),
                        y=int(self.path[0][1])))
-        if len(self.balls_arr) > 1:
-            self.balls_arr[-2].child = self.balls_arr[-1]
 
     def push(self, ball: Ball) -> None:
         self.balls_arr.append(ball)
