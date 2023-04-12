@@ -23,12 +23,6 @@ def find_bounds(a: list, target: int) -> (int, int, str):  # TODO покрыть
     return left, right, a[target].color
 
 
-# RED = (255, 0, 0)
-# GREEN = (0, 255, 0)
-# BLUE = (0, 0, 255)
-# YELLOW = (255, 255, 0)
-
-
 class Sequence:
     def __init__(self, screen, path):
         self.screen = screen
@@ -56,13 +50,17 @@ class Sequence:
         if r - l + 1 >= 2 and c == ball.color:
             self.knock(l, r)
         else:
-            self.balls_arr.insert(pos, ball)
-            self.re_count(pos)
+            l, r, c = find_bounds(self.balls_arr, pos - 1)
+            if r - l + 1 >= 2 and c == ball.color:
+                self.knock(l, r)
+            else:
+                self.balls_arr.insert(pos, ball)
+                self.re_count(pos)
 
     def knock(self, left: int, right: int):
         delta = right - left + 1
-        for i in range(len(self.balls_arr) - 1, right, -1):
-            self.balls_arr[i].counter = self.balls_arr[i - delta].counter
+        for i in range(left):
+            self.balls_arr[i].counter = self.balls_arr[i + delta].counter
         for i in range(left, right + 1):
             self.balls_arr[i].kill()
         del self.balls_arr[left:right + 1]
