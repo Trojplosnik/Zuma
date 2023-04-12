@@ -50,7 +50,6 @@ class Controller:
             elif event.type == self.timer_event_generate\
                     and self.seq.MAX_BALLS_IN_SEQ != 1:
                 self.seq.generate()
-                # print([x.child for x in self.seq.balls_arr])
                 self.seq.MAX_BALLS_IN_SEQ -= 1
                 self.setup_timer_generate()
 
@@ -64,20 +63,8 @@ class Controller:
 
         for i in range(len(self.seq.balls_arr)):
             for j in self.flying_bullets:
-                # print(i, len(self.seq.balls_arr))
-                r = pygame.sprite.spritecollide(sprite=self.seq.balls_arr[i],
-                                                group=self.flying_bullets,
-                                                dokill=True)
-                if len(r) != 0:
-                    print(j.rect.center)
-                    print(self.seq.balls_arr[i].rect.center)
+                if j.collode_balls(self.seq.balls_arr[i]):
+                    j.kill()
                     self.seq.insert(j, i)
-                    print(j.color)
-                    print([x.color for x in self.seq.balls_arr])
-                    # print(self.seq.balls_arr)
                     return
-            # r = pygame.sprite.spritecollide(self.seq.balls_arr[i], self.flying_bullets, False, pygame.sprite.collide_circle)
-            # for j in self.flying_bullets:
-            #         print(self.seq.balls_arr[i].color, i)
-            #         self.seq.insert(i)
 

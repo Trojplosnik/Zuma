@@ -42,6 +42,13 @@ class Ball(pygame.sprite.Sprite):
         self.rect.center = x, y
         self.angle = 0
 
+    def collode_balls(self, other):
+        return int(math.sqrt((other.rect.centerx
+                              - self.rect.centerx) ** 2
+                             + ((other.rect.centery
+                                 - self.rect.centery) ** 2))) + 1 \
+               < DEFAULT_BALL_SIZE
+
     def fly(self):
         self.rect.centerx += int(math.cos(self.angle) * DEFAULT_SPEED)
         self.rect.centery -= int(math.sin(self.angle) * DEFAULT_SPEED)
@@ -49,7 +56,6 @@ class Ball(pygame.sprite.Sprite):
                 or self.rect.x < -DEFAULT_BALL_SIZE \
                 or self.rect.y > self.screen.get_height() \
                 or self.rect.y < -DEFAULT_BALL_SIZE:
-            print(self.rect.y)
             self.kill()
 
     def move_ball(self, x, y):
