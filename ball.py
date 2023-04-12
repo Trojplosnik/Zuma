@@ -7,6 +7,15 @@ DEFAULT_BALL_SIZE = 40
 DEFAULT_SPEED = 10
 
 
+"""
+Класс шарика, описывает поведение шарика
+-создание случайного шарика
+-полет шарика при выстреле
+-настройка коллизий
+-перемешение
+-орисовка
+"""
+
 class Ball(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, color="RANDOM"):
         super().__init__()

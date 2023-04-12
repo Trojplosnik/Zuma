@@ -23,6 +23,22 @@ def find_bounds(a: list, target: int) -> (int, int, str):  # TODO покрыть
     return left, right, a[target].color
 
 
+"""
+    Класс последовательности шариков
+
+    path - путь шариков
+    balls_arr - список шариков
+    MAX_BALLS_IN_SEQ - сколько шариков будет сгенерированно
+    
+    описывает поведение последовательности шариков:
+    -Генерация новых шариков
+    -Обраотка попадания выстреленного шарика в последовательность
+    -Перемещение по карте
+    -Отрисовка
+
+"""
+
+
 class Sequence:
     def __init__(self, screen, path):
         self.screen = screen
@@ -31,6 +47,10 @@ class Sequence:
         self.MAX_BALLS_IN_SEQ = 20
         self.generate()
 
+
+    """
+    Создает шарик и пушит его в конец последовательности
+    """
     def generate(self):
         self.push(Ball(screen=self.screen, x=int(self.path[0][0]),
                        y=int(self.path[0][1])))
@@ -38,10 +58,17 @@ class Sequence:
     def push(self, ball: Ball) -> None:
         self.balls_arr.append(ball)
 
+    """
+        Пересчет позиций шариков, 
+        когда в последовательность добавился выстреленный шарик
+    """
     def re_count(self, pos: int) -> None:
         for i in range(pos + 1):
             self.balls_arr[i].counter += 42
 
+    """
+        Добавление в последовательность выстреленного шарика
+    """
     def insert(self, ball: Ball, pos: int) -> None:
         ball.counter = self.balls_arr[pos].counter
         l, r, c = find_bounds(self.balls_arr, pos)
@@ -55,6 +82,12 @@ class Sequence:
                 self.balls_arr.insert(pos, ball)
                 self.re_count(pos)
 
+    """
+        Убираем подпоследовательность если выстреленный 
+        шарик прореагировал с ней
+        Производим пересчет позиций шариков
+    """
+
     def knock(self, left: int, right: int):
         delta = right - left + 1
         for i in range(left):
@@ -63,6 +96,9 @@ class Sequence:
             self.balls_arr[i].kill()
         del self.balls_arr[left:right + 1]
 
+    """
+        Двигаем шарики по карте
+    """
     def move(self):
         for ball in self.balls_arr:
             try:
@@ -72,6 +108,9 @@ class Sequence:
             except IndexError:
                 sys.exit()
 
+    """
+        Отрисовываем шарики
+    """
     def draw(self):
         for ball in self.balls_arr:
             ball.draw_ball()
