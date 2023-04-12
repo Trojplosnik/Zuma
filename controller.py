@@ -65,6 +65,9 @@ class Controller:
             for j in self.flying_bullets:
                 if j.collode_balls(self.seq.balls_arr[i]):
                     j.kill()
+                    print(j.color)
+                    print(self.seq.balls_arr[i].color)
                     self.seq.insert(j, i)
+                    print([x.color for x in self.seq.balls_arr])
                     return
 
