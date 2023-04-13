@@ -8,7 +8,7 @@ from ball import Ball
 """
 
 
-def find_bounds(a: list, target: int) -> (int, int, str):  # TODO покрыть тестами
+def find_bounds(a: list, target: int) -> (int, int, str):
     left, right = target, target
     for i in range(target + 1, len(a)):
         if a[i].color == a[target].color:
