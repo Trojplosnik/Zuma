@@ -20,7 +20,7 @@ def find_bounds(a: list, target: int) -> (int, int, str):
             left -= 1
         else:
             break
-    return left, right, a[target].color
+    return left, right
 
 
 """
@@ -47,10 +47,10 @@ class Sequence:
         self.MAX_BALLS_IN_SEQ = 20
         self.generate()
 
+    """
+        Создает шарик и пушит его в конец последовательности
+    """
 
-    """
-    Создает шарик и пушит его в конец последовательности
-    """
     def generate(self):
         self.push(Ball(screen=self.screen, x=int(self.path[0][0]),
                        y=int(self.path[0][1])))
@@ -62,6 +62,7 @@ class Sequence:
         Пересчет позиций шариков, 
         когда в последовательность добавился выстреленный шарик
     """
+
     def re_count(self, pos: int) -> None:
         for i in range(pos + 1):
             self.balls_arr[i].counter += 42
@@ -69,18 +70,21 @@ class Sequence:
     """
         Добавление в последовательность выстреленного шарика
     """
+
     def insert(self, ball: Ball, pos: int) -> None:
         ball.counter = self.balls_arr[pos].counter
-        l, r, c = find_bounds(self.balls_arr, pos)
-        if r - l + 1 >= 2 and c == ball.color:
-            self.knock(l, r)
-        else:
-            l, r, c = find_bounds(self.balls_arr, pos - 1)
-            if r - l + 1 >= 2 and c == ball.color:
+        if self.balls_arr[pos].color == ball.color:
+            l, r = find_bounds(self.balls_arr, pos)
+            if r - l + 1 >= 2:
                 self.knock(l, r)
-            else:
-                self.balls_arr.insert(pos, ball)
-                self.re_count(pos)
+                return
+        elif pos > 0 and self.balls_arr[pos - 1].color == ball.color:
+            l, r = find_bounds(self.balls_arr, pos - 1)
+            if r - l + 1 >= 2:
+                self.knock(l, r)
+                return
+        self.balls_arr.insert(pos, ball)
+        self.re_count(pos)
 
     """
         Убираем подпоследовательность если выстреленный 
@@ -99,6 +103,7 @@ class Sequence:
     """
         Двигаем шарики по карте
     """
+
     def move(self):
         for ball in self.balls_arr:
             try:
@@ -111,6 +116,7 @@ class Sequence:
     """
         Отрисовываем шарики
     """
+
     def draw(self):
         for ball in self.balls_arr:
             ball.draw_ball()

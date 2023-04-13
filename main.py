@@ -1,5 +1,10 @@
 import pygame
 from controller import Controller
+import os
+
+"""
+    Game - основыной класс, точка запучка программы
+"""
 
 
 class Game:
@@ -20,7 +25,10 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(game_map_sprite="images/Map.jpg", frog_position=(372, 280),
-                path_file="path.txt", target_sprite="images/watermellon.png",
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    game = Game(game_map_sprite=f"{ROOT_DIR}/images/Map.jpg",
+                frog_position=(372, 280),
+                path_file="path.txt",
+                target_sprite=f"{ROOT_DIR}/images/watermellon.png",
                 target_position=(182, 322))
     game.run()

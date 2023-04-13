@@ -3,7 +3,8 @@ import unittest
 from ball import Ball
 
 d = {
-    "R": "RED", "G": "GREEN", "B": "BLUE", "Y": "YELLOW", "RED": "R", "GREEN": "G", "BLUE": "B", "YELLOW": "Y"
+    "R": "RED", "G": "GREEN", "B": "BLUE", "Y": "YELLOW", "RED": "R",
+    "GREEN": "G", "BLUE": "B", "YELLOW": "Y"
 }
 
 
@@ -54,16 +55,12 @@ class TestFindBounds(unittest.TestCase):
         ]
     }
 
-    def setUp(self) -> None:
-        pass
-
     def comporator(self, target: dict):
         seq = seq_maker(target["seq"])
         seq.balls_arr = seq.balls_arr[1:]
         for i in range(4):
-            l, r, _ = find_bounds(seq.balls_arr, i)
-            self.assertEqual(target["ans"][i], r - l + 1
-                             )
+            l, r = find_bounds(seq.balls_arr, i)
+            self.assertEqual(target["ans"][i], r - l + 1)
 
     def test_no_subsequence(self):
         self.comporator(self.no_subsequence_case)
@@ -122,9 +119,6 @@ class TestInsertSeq(unittest.TestCase):
         ]
     }
 
-    def setUp(self) -> None:
-        pass
-
     def comporator(self, target: dict):
         blt = ball_maker(target["blt"])
 
@@ -132,7 +126,8 @@ class TestInsertSeq(unittest.TestCase):
             seq = seq_maker(target["seq"])
             seq.balls_arr = seq.balls_arr[1:]
             seq.insert(blt, i)
-            self.assertEqual(target["ans"][i], "".join([d[i.color] for i in seq.balls_arr]))
+            self.assertEqual(target["ans"][i],
+                             "".join([d[i.color] for i in seq.balls_arr]))
 
     def test_no_subsequence(self):
         self.comporator(self.no_subsequence_case)
